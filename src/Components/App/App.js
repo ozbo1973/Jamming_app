@@ -4,6 +4,7 @@ import './App.css';
 import {SearchBar} from '../SearchBar/SearchBar';
 import {SearchResults} from '../SearchResults/SearchResults';
 import {Playlist} from '../Playlist/Playlist';
+import {Spotify} from '../../Util/Spotify';
 
 class App extends React.Component {
   constructor(props) {
@@ -40,13 +41,15 @@ class App extends React.Component {
   }
 
   search(term) {
-    console.log(term);
+    Spotify.search(term).then(resultOfSearch => {
+      this.setState({searchResults: resultOfSearch})
+    })
   }
 
   render() {
     return (
       <div>
-        <h1>Ja<span clasName="highlight">mmm</span>ing</h1>
+        <h1>Ja<span className="highlight">mmm</span>ing</h1>
           <div className="App">
             <SearchBar onSearch={this.search} />
 
