@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   removeTrack(track) {
-    let tracks = this.state.playlistTracks.slice(tracks.indexOf(track),1);
+    let tracks = this.state.playlistTracks.slice(tracks.indexOf(track.id),1);
     this.setState({playlistTracks: tracks});
   }
 
