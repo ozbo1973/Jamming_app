@@ -1,6 +1,8 @@
 
 const clientId= "41b941fa464d4511a70b34ea5541f69e";
 const redirectURI = 'http://localhost:3000/';
+const appApiUrl = 'https://api.spotify.com';
+const appUserAccntUrl = 'https://accounts.spotify.com'
 let accessToken;
 
 export const Spotify = {
@@ -19,13 +21,13 @@ export const Spotify = {
       window.history.pushState('Access Token', null, '/');
       return accessToken;
     } else {
-      const spotifyAccessURL = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+      const spotifyAccessURL = `${appUserAccntUrl}/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
       window.location = spotifyAccessURL;
     }
-  },
+  }, //.getAccessToken
 
   search(term) {
-    return fetch(`https://api.spotify.com/v1/search?type=track&q={term}`, {
+    return fetch(`${appApiUrl}/v1/search?type=track&q=${term}`, {
       header: {Authorization: `Bearer ${Spotify.accessToken}`}
     }).then(response => {
       return response.json();
@@ -41,6 +43,41 @@ export const Spotify = {
         }))
       }else {return []}
     })
-  }
+  }, // .search
+
+  savePlaylist(name,trackURIs) {
+    if (!name || !trackURIs.length) {
+      return;
+    }
+
+    const accessToken = Spotify.getAccessToken();
+    const headers = {Authorization: `Bearer ${accessToken}`};
+    const userId;
+
+    //retriveing user id from spotify
+    return fetch(`${appApiUrl}/v1/me`,{headers: headers}
+  ).then(response => response.json()
+).then(jsonResponse => {
+  userId = jsonResponse.id;
+  return fetch(`${appApiUrl}/v1/users/${userId}/playlists`,
+    {
+    headers: headers,
+    method: 'POST',
+    body: JSON.sringify({name: name})
+  }).then(response => response.json()
+).then(jsonResponse => {
+  const playlistId = jsonResponse.id;
+  return fetch(`${appApiUrl}/v1/users/${userId}/playlists/${playlistId}/tracks`,
+  {
+    headers: headers,
+    method: 'POST',
+    body: JSON.stringify({URIs:trackURIs})
+  })
+})//.jsonResponse
+})//.jsonResponse
+
+  } //.savePlaylist
+
+
 
 }
