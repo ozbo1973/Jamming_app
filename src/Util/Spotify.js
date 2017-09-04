@@ -66,7 +66,7 @@ export const Spotify = {
     {
     headers: headers,
     method: 'POST',
-    body: JSON.sringify({name: name})
+    body: JSON.stringify({name: name})
   }).then(response => response.json()
 ).then(jsonResponse => {
   const playlistId = jsonResponse.id;
@@ -74,7 +74,8 @@ export const Spotify = {
   {
     headers: headers,
     method: 'POST',
-    body: JSON.stringify({URIs:trackURIs})
+    body: JSON.stringify({uris:trackURIs}),
+    success: console.log(`Playlist: ${name} was successfully saved to your account`)
   })
 })//.jsonResponse
 })//.jsonResponse
