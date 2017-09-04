@@ -27,22 +27,25 @@ export const Spotify = {
   }, //.getAccessToken
 
   search(term) {
+    const accessToken = Spotify.getAccessToken();
+    const headers = {Authorization: `Bearer ${accessToken}`}
     return fetch(`${appApiUrl}/v1/search?type=track&q=${term}`, {
-      header: {Authorization: `Bearer ${Spotify.accessToken}`}
+      headers: headers
     }).then(response => {
       return response.json();
     }).then(jsonResponse => {
-      if (jsonResponse.tracks) {
-        jsonResponse.tracks.items.map(track => ({
+      console.log(jsonResponse.tracks);
+      if (!jsonResponse.tracks) {
+        return [];
+      }
+       return jsonResponse.tracks.items.map(track => ({
           id: track.id,
           name: track.name,
           artist: track.artists[0].name,
           album: track.album.name,
           uri: track.uri
-
         }))
-      }else {return []}
-    })
+      });
   }, // .search
 
   savePlaylist(name,trackURIs) {
@@ -52,7 +55,7 @@ export const Spotify = {
 
     const accessToken = Spotify.getAccessToken();
     const headers = {Authorization: `Bearer ${accessToken}`};
-    const userId;
+    let userId;
 
     //retriveing user id from spotify
     return fetch(`${appApiUrl}/v1/me`,{headers: headers}

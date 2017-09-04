@@ -11,7 +11,8 @@ export class TrackList extends React.Component {
             return <Track key={track.id}
                     track={track}
                     onAdd={this.props.onAdd}
-                    onRemove={this.props.onRemove} />
+                    onRemove={this.props.onRemove}
+                    isRemove={this.props.isRemove} />
           })
         }
       </div>

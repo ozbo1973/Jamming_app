@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import {SearchBar} from '../SearchBar/SearchBar';
@@ -13,7 +13,8 @@ class App extends React.Component {
         searchResults: [],
         playlistName: "New Play List",
         playlistTracks: []
-      }
+      };
+
       this.addTrack = this.addTrack.bind(this);
       this.removeTrack = this.removeTrack.bind(this);
       this.updatePlaylistName = this.updatePlaylistName.bind(this);
@@ -28,7 +29,8 @@ class App extends React.Component {
   }
 
   removeTrack(track) {
-    let tracks = this.state.playlistTracks.slice(tracks.indexOf(track.id),1);
+    let tracks = this.state.playlistTracks;
+    tracks = tracks.slice(tracks.indexOf(track.id),1);
     this.setState({playlistTracks: tracks});
   }
 
@@ -44,7 +46,7 @@ class App extends React.Component {
         playlistTracks: []
       });
     });
-  };
+  }
 
   search(term) {
     Spotify.search(term).then(resultOfSearch => {
@@ -63,8 +65,7 @@ class App extends React.Component {
               <SearchResults searchResults={this.state.searchResults}
                 onAdd={this.addTrack} />
 
-              <Playlist playlistName={this.state.playlistName}
-                playlistTracks={this.state.playlistTracks}
+              <Playlist playlistTracks={this.state.playlistTracks}
                 onRemove={this.removeTrack}
                 onNameChange={this.updatePlaylistName}
                 onSave={this.savePlaylist} />
