@@ -1,6 +1,6 @@
 
 const clientId= "41b941fa464d4511a70b34ea5541f69e";
-const redirectURI = 'http://jammingBB.surge.sh/' //'http://localhost:3000/';
+const redirectURI = 'http://localhost:3000/';  //'http://jammingBB.surge.sh/'
 const appApiUrl = 'https://api.spotify.com';
 const appUserAccntUrl = 'https://accounts.spotify.com'
 let accessToken;
@@ -75,7 +75,7 @@ export const Spotify = {
     headers: headers,
     method: 'POST',
     body: JSON.stringify({uris:trackURIs}),
-    success: console.log(`Playlist: ${name} was successfully saved to your account`)
+    success: console.log(`${userId} Playlist: ${name} was successfully saved to your account`)
   })
 })//.jsonResponse
 })//.jsonResponse

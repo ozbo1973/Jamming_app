@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ShowSuccess Proto</title>
+    <style media="screen">
+    .Success-Hidden {
+      visibility: hidden;
+    }
+
+    .Show-Success {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 6.94rem;
+      margin-bottom: 6.33rem;
+    }
+
+    .Show-Success a {
+      cursor: pointer;
+      width: 8.11rem;
+      padding: .77rem 0;
+      border-radius: 54px;
+      background-color: #010c3f;
+      text-align: center;
+      font-size: .833rem;
+      transition: background-color .25s;
+      color: white;
+      margin: 1rem;
+    }
+
+    .Show-Success a:hover {
+      background-color: rgba(108, 65, 233, .7);
+    }
+
+    </style>
+  </head>
+  <body>
+    <div class="Success-Hidden">
+      <h3>Your Playlist: {Plalist Name} has been loaded successfully</h3>
+      <a>CREATE NEW LIST</a> <a>OPEN SPOTIFY</a>
+    </div>
+
+  </body>
+</html>
