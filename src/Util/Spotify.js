@@ -4,6 +4,7 @@ const redirectURI = 'http://localhost:3000/';  //'http://jammingBB.surge.sh/'
 const appApiUrl = 'https://api.spotify.com';
 const appUserAccntUrl = 'https://accounts.spotify.com'
 let accessToken;
+let currentUserId;
 
 export const Spotify = {
   getAccessToken() {
@@ -26,15 +27,27 @@ export const Spotify = {
     }
   }, //.getAccessToken
 
+  getUserId() {
+    if (currentUserId) {
+      return new Promise(resolve => resolve(currentUserId))
+    }
+    const headers = {Authorization: `Bearer ${this.getAccessToken()}`};
+    //retriveing user id from spotify
+    return fetch(`${appApiUrl}/v1/me`,{headers: headers}
+    ).then(response => response.json()
+    ).then(jsonResponse => {
+       return jsonResponse.id;
+    })
+  }, // .getUserId
+
   search(term) {
-    const accessToken = Spotify.getAccessToken();
-    const headers = {Authorization: `Bearer ${accessToken}`}
+
+    const headers = {Authorization: `Bearer ${this.getAccessToken()}`}
     return fetch(`${appApiUrl}/v1/search?type=track&q=${term}`, {
       headers: headers
     }).then(response => {
       return response.json();
     }).then(jsonResponse => {
-      console.log(jsonResponse.tracks);
       if (!jsonResponse.tracks) {
         return [];
       }
@@ -53,16 +66,10 @@ export const Spotify = {
       return;
     }
 
-    const accessToken = Spotify.getAccessToken();
-    const headers = {Authorization: `Bearer ${accessToken}`};
-    let userId;
-
-    //retriveing user id from spotify
-    return fetch(`${appApiUrl}/v1/me`,{headers: headers}
-  ).then(response => response.json()
-).then(jsonResponse => {
-  userId = jsonResponse.id;
-  return fetch(`${appApiUrl}/v1/users/${userId}/playlists`,
+  const headers = {Authorization: `Bearer ${this.getAccessToken()}`};
+  return this.getUserId().then(result => currentUserId = result
+  ).then(() => {
+  return fetch(`${appApiUrl}/v1/users/${currentUserId}/playlists`,
     {
     headers: headers,
     method: 'POST',
@@ -70,15 +77,15 @@ export const Spotify = {
   }).then(response => response.json()
 ).then(jsonResponse => {
   const playlistId = jsonResponse.id;
-  return fetch(`${appApiUrl}/v1/users/${userId}/playlists/${playlistId}/tracks`,
+  return fetch(`${appApiUrl}/v1/users/${currentUserId}/playlists/${playlistId}/tracks`,
   {
     headers: headers,
     method: 'POST',
     body: JSON.stringify({uris:trackURIs}),
-    success: console.log(`${userId} Playlist: ${name} was successfully saved to your account`)
+    success: console.log(`${currentUserId} Playlist: ${name} was successfully saved to your account`)
   })
 })//.jsonResponse
-})//.jsonResponse
+})
 
   } //.savePlaylist
 
