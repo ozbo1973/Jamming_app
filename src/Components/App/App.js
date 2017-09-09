@@ -64,7 +64,7 @@ class App extends React.Component {
     this.setState({playlistName: name});
   }
 
-  savePlaylist() {
+  savePlaylist(name) {
     let trackURIs = this.state.playlistTracks.map(track => track.uri);
     Spotify.savePlaylist(this.state.playlistName,trackURIs).then(() => {
       this.setState({
@@ -83,17 +83,17 @@ class App extends React.Component {
     if (this.state.success){
       this.setState({
         success: false,
-        playlistName: 'New Playlist',
+        playlistName: 'New Play list',
         playlistTracks: [],
         searchResults: []
       })
     }
-  }
+  }// .resetToCreateList
 
   render() {
     return (
       <div>
-        <h1>Ja<span className="highlight">mmm</span>ing with <span className="highlight">BBove</span></h1>
+        <h1>Ja<span className="highlight">mmm</span>ing with <span className="highlight">BB</span></h1>
         <div className="App">
           {this.renderPageView()}
         </div>

@@ -5,6 +5,7 @@ const appApiUrl = 'https://api.spotify.com';
 const appUserAccntUrl = 'https://accounts.spotify.com'
 let accessToken;
 let currentUserId;
+let newlyCreatedPlaylistId;
 
 export const Spotify = {
   getAccessToken() {
@@ -29,7 +30,8 @@ export const Spotify = {
 
   getUserId() {
     if (currentUserId) {
-      return new Promise(resolve => resolve(currentUserId))
+      //return new Promise(resolve => resolve(currentUserId))
+      return currentUserId;
     }
     const headers = {Authorization: `Bearer ${this.getAccessToken()}`};
     //retriveing user id from spotify
@@ -37,11 +39,17 @@ export const Spotify = {
     ).then(response => response.json()
     ).then(jsonResponse => {
        return jsonResponse.id;
-    })
+    }).then(result => currentUserId = result)
   }, // .getUserId
 
-  search(term) {
+  getNewlyCreatedPlaylist() {
+    if(newlyCreatedPlaylistId) {
+      return newlyCreatedPlaylistId;
+    }
+    return "There is no playlist, please create a playlist"
+  }, //.getNewlyCreatedPlaylist
 
+  search(term) {
     const headers = {Authorization: `Bearer ${this.getAccessToken()}`}
     return fetch(`${appApiUrl}/v1/search?type=track&q=${term}`, {
       headers: headers
@@ -67,8 +75,7 @@ export const Spotify = {
     }
 
   const headers = {Authorization: `Bearer ${this.getAccessToken()}`};
-  return this.getUserId().then(result => currentUserId = result
-  ).then(() => {
+  return this.getUserId().then(() => {
   return fetch(`${appApiUrl}/v1/users/${currentUserId}/playlists`,
     {
     headers: headers,
@@ -77,12 +84,13 @@ export const Spotify = {
   }).then(response => response.json()
 ).then(jsonResponse => {
   const playlistId = jsonResponse.id;
+  newlyCreatedPlaylistId= playlistId;
   return fetch(`${appApiUrl}/v1/users/${currentUserId}/playlists/${playlistId}/tracks`,
   {
     headers: headers,
     method: 'POST',
     body: JSON.stringify({uris:trackURIs}),
-    success: console.log(`${currentUserId} Playlist: ${name} was successfully saved to your account`)
+    success: console.log(`${currentUserId} Playlist: ${playlistId} was successfully saved to your account`)
   })
 })//.jsonResponse
 })
