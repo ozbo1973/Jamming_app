@@ -6,7 +6,7 @@ export class Playlist extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      playlistName: 'New Play List'
+      playlistName:"New Play List"
     }
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
@@ -27,7 +27,7 @@ export class Playlist extends React.Component {
 
   showInvalidPlaylistMessage(){
       if (this.state.playlistName === 'New Play List' || !this.state.playlistName) {
-        return <h6>{this.state.playlistName} is not a valid name, please rename the playlist.</h6>
+        return <h6>"{this.state.playlistName}" is not a valid name, please rename the playlist.</h6>
       }
       return;
   }

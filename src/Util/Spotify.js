@@ -30,7 +30,6 @@ export const Spotify = {
 
   getUserId() {
     if (currentUserId) {
-      //return new Promise(resolve => resolve(currentUserId))
       return currentUserId;
     }
     const headers = {Authorization: `Bearer ${this.getAccessToken()}`};

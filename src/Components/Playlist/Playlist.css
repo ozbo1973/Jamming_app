@@ -37,6 +37,12 @@
   background-color: rgba(108, 65, 233, .7);
 }
 
+.Playlist h6 {
+  color: red;
+  margin: 2rem;
+  font-style: italic;
+}
+
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent;

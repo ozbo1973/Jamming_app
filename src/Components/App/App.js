@@ -26,7 +26,6 @@ class App extends React.Component {
   } //.constructor
 
   renderPageView() {
-    console.log('this is' + this.state.success);
     if (this.state.success) {
       return <ShowSuccess showSuccess={this.state.success}
               playlistName= {this.state.playlistName}

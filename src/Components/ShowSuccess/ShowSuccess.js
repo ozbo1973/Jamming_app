@@ -9,6 +9,7 @@ export class ShowSuccess extends React.Component {
     this.state={
       success: this.props.showSuccess
     };
+    this.viewSuccessMessage = this.viewSuccessMessage.bind(this);
     this.handleSpotifyLinkOnClick = this.handleSpotifyLinkOnClick.bind(this);
   } //.constructor
 
@@ -17,26 +18,18 @@ export class ShowSuccess extends React.Component {
       return `The Playlist "${this.props.playlistName}" has been successfully created!`
     }
     return ""
-  }
+  }// .viewSuccessMessage
 
   buildSpotifyLink() {
     const playlistId = Spotify.getNewlyCreatedPlaylist();
-    let userId = Spotify.getUserId();
+    const userId = Spotify.getUserId();
     window.open(`https://open.spotify.com/user/${userId}/playlist/${playlistId}`);
-
-    //return Spotify.getUserId().then(result => userId = result).then(() => {
-      //console.log(userId);
-
-      //window.location.href=`https://open.spotify.com/user/${userId}/playlist/${playlistId}`
-
-    //});
-
-  }
+  }// . buildSpotifyLink
 
   handleSpotifyLinkOnClick (event){
     this.buildSpotifyLink();
     this.props.newList();
-  }
+  }// .handleSpotifyLinkOnClick
 
   render() {
     return (
