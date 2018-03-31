@@ -1,7 +1,7 @@
 import React from 'react';
 import './SearchResults.css';
 import {TrackList} from '../TrackList/TrackList';
-
+/*
 export class SearchResults extends React.Component {
   render() {
     return (
@@ -12,15 +12,13 @@ export class SearchResults extends React.Component {
     )
   }
 }
-/*
-function SearchResults(props) {
+*/
+
+export function SearchResults(props) {
     return (
       <div className="SearchResults">
         <h2>Results</h2>
-        <TrackList tracks={this.props.searchResults} onAdd={this.props.onAdd} />
+        <TrackList tracks={props.searchResults} onAdd={props.onAdd} />
       </div>
     )
 }
-
-export default SearchResults
-*/

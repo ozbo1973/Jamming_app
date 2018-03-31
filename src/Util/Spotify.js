@@ -1,6 +1,7 @@
+import keys from './keys'
 
-const clientId= "41b941fa464d4511a70b34ea5541f69e";
-const redirectURI = 'http://localhost:3000/';  //'http://jammingBB.surge.sh/'
+const clientId= keys.clientId;
+const redirectURI = 'http://localhost:3000/' //'http://localhost:3000/'; 'http://jammingBB.surge.sh/'
 const appApiUrl = 'https://api.spotify.com';
 const appUserAccntUrl = 'https://accounts.spotify.com'
 let accessToken;
